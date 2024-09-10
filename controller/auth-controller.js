@@ -1,3 +1,4 @@
+const passport = require('passport');
 
 //auth login
 module.exports.login_get = ( req, res ) => {
@@ -10,6 +11,13 @@ module.exports.logout_get = ( req, res ) => {
 };
 
 //auth with google
-module.exports.google_login = ( req, res ) => {
-    res.send('Redirected to Google');
-};
+module.exports.google_login = 
+    passport.authenticate('google', {
+        scope: ['profile', 'email']
+    });
+
+
+//google redirect
+module.exports.google_redirect = [passport.authenticate('google'),(req, res) => {
+    res.send('redirected to callback URI');
+}];
